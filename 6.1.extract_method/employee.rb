@@ -51,17 +51,7 @@ class Employee
     @employee_db.each do |member|
       payment = member.payment_base
 
-      # 半年以上勤め上げればボーナスが付く
-      if month + year * 12 >= member.enter_at.month + member.enter_at.year * 12 + 6
-         case member.bonus_factor
-         when 1
-           payment *= 1.1
-         when 2
-           payment *= 1.2
-         when 3
-           payment *= 1.3
-         end
-      end
+      payment = add_half_year_bonus(member, payment, year, month)
 
       # 役職毎の給料増額
       if member.position == :section_manager
@@ -107,6 +97,24 @@ class Employee
       result[member.name] = month + year * 12 - (member.enter_at.month + member.enter_at.year * 12)
     end
     result
+  end
+
+private
+  def add_half_year_bonus(member, payment, year, month)
+    if month + year * 12 >= member.enter_at.month + member.enter_at.year * 12 + 6
+       case member.bonus_factor
+       when 1
+         payment * 1.1
+       when 2
+         payment * 1.2
+       when 3
+         payment * 1.3
+       else
+         payment
+       end
+    else
+      payment
+    end
   end
 end
 
