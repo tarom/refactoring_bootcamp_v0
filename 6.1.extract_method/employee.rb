@@ -110,16 +110,10 @@ private
     end
   end
 
+  MANAGER_BONUSES = { section_manager: 2, group_leader: 1.5, general_manager: 10 }
   def add_manager_bonus(member, payment)
-    if member.position == :section_manager
-      payment * 2
-    elsif member.position == :group_leader
-      payment * 1.5
-    elsif member.position == :general_manager
-      payment * 10
-    else
-      payment
-    end
+    bonus = MANAGER_BONUSES[member.position]
+    payment * (bonus ? bonus : 1)
   end
 end
 
