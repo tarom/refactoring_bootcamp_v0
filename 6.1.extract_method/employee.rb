@@ -53,14 +53,7 @@ class Employee
 
       payment = add_half_year_bonus(member, payment, year, month)
 
-      # 役職毎の給料増額
-      if member.position == :section_manager
-        payment *= 2
-      elsif member.position == :group_leader
-        payment *= 1.5
-      elsif member.position == :general_manager
-        payment *= 10
-      end
+      payment = add_manager_bonus(member, payment)
 
       result[member.name] = payment
     end
@@ -112,6 +105,18 @@ private
        else
          payment
        end
+    else
+      payment
+    end
+  end
+
+  def add_manager_bonus(member, payment)
+    if member.position == :section_manager
+      payment * 2
+    elsif member.position == :group_leader
+      payment * 1.5
+    elsif member.position == :general_manager
+      payment * 10
     else
       payment
     end
