@@ -70,14 +70,7 @@ class Employee
         holiday += (month + year * 12 - (member.enter_at.month + member.enter_at.year * 12)) / 12 + 1
       end
 
-      # 役職によっては忙しいので休暇が実質無くなっていく
-      if member.position == :section_manager
-        holiday -= 5
-      elsif member.position == :group_leader
-        holiday -= 2
-      elsif member.position == :general_manager
-        holiday -= 10
-      end
+      holiday = calc_holiday_for_manager(member, holiday)
 
       result[member.name] = holiday
     end
@@ -114,6 +107,19 @@ private
   def add_manager_bonus(member, payment)
     bonus = MANAGER_BONUSES[member.position]
     payment * (bonus ? bonus : 1)
+  end
+
+  # 役職によっては忙しいので休暇が実質無くなっていくので考慮して算出する
+  def calc_holiday_for_manager(member, holiday)
+    if member.position == :section_manager
+      holiday - 5
+    elsif member.position == :group_leader
+      holiday - 2
+    elsif member.position == :general_manager
+      holiday - 10
+    else
+      holiday
+    end
   end
 end
 
