@@ -24,13 +24,13 @@ class Battle
   end
 
   def atack(atacker, defencer)
-    if (atacker.atack > defencer.defence)
+    if atacker.element == :dark || defencer.element == :dark
+        return false
+    elsif atacker.atack > defencer.defence
       damage = atacker.atack - defencer.defence
       is_elemental_bonus = false
 
-      if atacker.element == :dark || defencer.element == :dark
-        return false
-      elsif atacker.element != defencer.element
+      if atacker.element != defencer.element
         if (atacker.element == :water || defencer.element == :water) && 
            (atacker.element == :fire || defencer.element == :fire)
           is_elemental_bonus = true
