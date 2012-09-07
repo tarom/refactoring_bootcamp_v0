@@ -18,7 +18,7 @@ class Character
         return false
     elsif @atack > defencer.defence
       damage = @atack - defencer.defence
-      damage *= 2 if is_elemental_bonus(defencer)
+      damage *= 2 if elemental_bonus?(defencer)
       if defencer.life < damage
         defencer.life = 0
       else
@@ -29,7 +29,7 @@ class Character
   end
 
 private
-  def is_elemental_bonus(defencer)
+  def elemental_bonus?(defencer)
     result = false
     if @element != defencer.element
       if (@element == :water || defencer.element == :water) && 
