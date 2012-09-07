@@ -30,18 +30,15 @@ class Character
 
 private
   def elemental_bonus?(defencer)
-    result = false
-    if @element != defencer.element
-      if (@element == :water || defencer.element == :water) && 
-         (@element == :fire || defencer.element == :fire)
-        result = true
-      end
-      if (@element == :wind || defencer.element == :wind) && 
-         (@element == :earth || defencer.element == :earth)
-        result = true
-      end
-    end
-    result
+    @element != defencer.element and (
+      (
+        (@element == :water or defencer.element == :water) and
+        (@element == :fire or defencer.element == :fire)
+      ) or (
+        (@element == :wind or defencer.element == :wind) and
+        (@element == :earth or defencer.element == :earth)
+      )
+    )
   end
 end
 
