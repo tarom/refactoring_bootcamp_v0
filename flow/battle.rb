@@ -53,9 +53,9 @@ class Battle
 
   def start
     loop do
-      return nil if !@first.atack(@second)
+      return nil unless @first.atack(@second)
       return @first if @second.life <= 0
-      return nil if !@second.atack(@first)
+      return nil unless @second.atack(@first)
       return @second if @first.life <= 0
       @turn += 1
     end
