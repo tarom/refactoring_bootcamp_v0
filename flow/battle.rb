@@ -18,19 +18,7 @@ class Character
         return false
     elsif @atack > defencer.defence
       damage = @atack - defencer.defence
-      is_elemental_bonus = false
-
-      if @element != defencer.element
-        if (@element == :water || defencer.element == :water) && 
-           (@element == :fire || defencer.element == :fire)
-          is_elemental_bonus = true
-        end
-        if (@element == :wind || defencer.element == :wind) && 
-           (@element == :earth || defencer.element == :earth)
-          is_elemental_bonus = true
-        end
-      end
-      damage *= 2 if is_elemental_bonus
+      damage *= 2 if is_elemental_bonus(defencer)
       if defencer.life < damage
         defencer.life = 0
       else
@@ -40,6 +28,21 @@ class Character
     true
   end
 
+private
+  def is_elemental_bonus(defencer)
+    result = false
+    if @element != defencer.element
+      if (@element == :water || defencer.element == :water) && 
+         (@element == :fire || defencer.element == :fire)
+        result = true
+      end
+      if (@element == :wind || defencer.element == :wind) && 
+         (@element == :earth || defencer.element == :earth)
+        result = true
+      end
+    end
+    result
+  end
 end
 
 class Battle
